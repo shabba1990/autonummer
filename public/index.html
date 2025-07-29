@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wachtrij</title>
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .nummer {
+      font-size: 6rem;
+      font-weight: bold;
+      color: #007acc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>De eerstvolgende is aan de beurt:</h1>
+    <div class="nummer" id="nummer">----<div>
+  </div>
+
+  <script>
+    async function updateNummer() {
+      try {
+        const response = await fetch('/nummer');
+        const data = await response.json();
+        document.getElementById('nummer').textContent = data.nummer;
+      } catch (err) {
+        document.getElementById('nummer').textContent = 'FOUT';
+      }
+    }
+
+    // Ververs elke 5 seconden
+    updateNummer();
+    setInterval(updateNummer, 5000);
+  </script>
+</body>
+</html>
